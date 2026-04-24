@@ -1,4 +1,4 @@
-package user.dto;
+package com.backend.backend.user.dto;
 
 public class RegisterRequest {
     private String name;

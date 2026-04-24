@@ -1,11 +1,12 @@
-package user.service;
+package com.backend.backend.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import user.dto.RegisterRequest;
-import user.entity.User;
-import user.repository.UserRepository;
+import com.backend.backend.common.exception.ResourceAlreadyExistsException;
+import com.backend.backend.user.dto.RegisterRequest;
+import com.backend.backend.user.entity.User;
+import com.backend.backend.user.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -13,10 +14,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String register(RegisterRequest request) {
+    public User register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            return "Email already exists";
+            throw new ResourceAlreadyExistsException("Email already exists");
         }
 
         User user = new User();
@@ -30,6 +31,6 @@ public class UserService {
 
         userRepository.save(user);
 
-        return "";
+        return user;
     }
 }
