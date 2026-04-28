@@ -1,9 +1,15 @@
 package com.backend.backend.user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend.common.exception.GlobalExceptionHandler;
 import com.backend.backend.common.exception.ResourceAlreadyExistsException;
+import com.backend.backend.common.exception.ResourceNotFoundException;
+import com.backend.backend.common.exception.UnauthorizedException;
+import com.backend.backend.user.dto.LoginRequest;
 import com.backend.backend.user.dto.RegisterRequest;
 import com.backend.backend.user.entity.User;
 import com.backend.backend.user.repository.UserRepository;
@@ -32,5 +38,23 @@ public class UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    public User login(LoginRequest loginRequest) {
+        User user = userRepository.findByEmail(loginRequest.getEmail());
+
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found");
+        }
+
+        if (!user.getPassword().equals(loginRequest.getPassword())) {
+            throw new UnauthorizedException("Invalid password");
+        }
+
+        return user;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

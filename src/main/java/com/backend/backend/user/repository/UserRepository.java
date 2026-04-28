@@ -6,4 +6,6 @@ import com.backend.backend.user.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByEmail(String email);
+
+    User findByEmail(String email);
 }
