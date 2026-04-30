@@ -17,6 +17,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user/get-users").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
