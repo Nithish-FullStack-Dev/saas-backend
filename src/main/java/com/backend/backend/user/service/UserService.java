@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.backend.common.exception.GlobalExceptionHandler;
 import com.backend.backend.common.exception.ResourceAlreadyExistsException;
 import com.backend.backend.common.exception.ResourceNotFoundException;
 import com.backend.backend.common.exception.UnauthorizedException;

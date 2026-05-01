@@ -41,11 +41,10 @@ public class UserController {
 
     }
 
-    // public ResponseEntity<ApiResponse<List<User>>> getAllUsers(){
-    // List<User> list = userService.getAllUsers();
-    // ApiResponse<List<User>> apiResponse = new ApiResponse<>(true, "Users fetched
-    // successfully", list);
-    // return ResponseEntity.ok(list);
-    // }
+    public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
+        List<User> list = userService.getAllUsers();
+        ApiResponse<List<User>> apiResponse = new ApiResponse<>(true, "Users fetched successfully", list);
+        return ResponseEntity.ok(apiResponse);
+    }
 
 }
