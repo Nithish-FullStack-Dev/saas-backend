@@ -1,17 +1,30 @@
 package com.backend.backend.auth.jwt;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 
+@Component
 public class JwtUtil {
-    private final String SECRET = "";
-    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+
+    @Value("${jwt.secret}")
+    private String secret;
+    private Key key;
 
     private final long EXPIRATION = 1000 * 60 * 60 * 24;
+
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+    }
 
     public String generateToken(String email) {
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend.auth.jwt.JwtUtil;
 import com.backend.backend.common.exception.ResourceAlreadyExistsException;
 import com.backend.backend.common.exception.ResourceNotFoundException;
 import com.backend.backend.common.exception.UnauthorizedException;
@@ -18,6 +19,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public User register(RegisterRequest request) {
 
@@ -39,7 +43,7 @@ public class UserService {
         return user;
     }
 
-    public User login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail());
 
         if (user == null) {
@@ -50,7 +54,7 @@ public class UserService {
             throw new UnauthorizedException("Invalid password");
         }
 
-        return user;
+        return jwtUtil.generateToken(user.getEmail());
     }
 
     public List<User> getAllUsers() {

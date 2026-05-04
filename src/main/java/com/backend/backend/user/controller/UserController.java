@@ -32,10 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<User>> login(@RequestBody LoginRequest loginRequest) {
-        User user = userService.login(loginRequest);
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest loginRequest) {
+        String token = userService.login(loginRequest);
 
-        ApiResponse<User> apiResponse = new ApiResponse<User>(true, "User Logged in Successfully", user);
+        ApiResponse<String> apiResponse = new ApiResponse<>(true, "User Logged in Successfully", token);
 
         return ResponseEntity.ok(apiResponse);
 
